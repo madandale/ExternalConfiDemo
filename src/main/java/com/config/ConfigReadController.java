@@ -56,7 +56,6 @@ public class ConfigReadController {
 	        dataSource.setUsername("sa");
 	        dataSource.setPassword("");
 		  
-	        String filePath = "file:///Users/madandale/Documents/Silenium/config/log.properties";
 			
 		JDBCConfigController config = new JDBCConfigController(dataSource,"select distinct property_key, property_value from MySiteProperties",
                 "property_key", "property_value");
