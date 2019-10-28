@@ -2,6 +2,9 @@ package com.config;
 
 import java.util.Map;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +28,9 @@ import ExternalConfiguration.ExternalConfig.PropertyConfigurationController;
 
 public class ConfigReadController {
 
+	
+	@Autowired
+	public DataSource dataSource;
 	
 	@RequestMapping(value ="/readConfigProperty")
 	public Map<String, String> readConfigFile() {
@@ -50,14 +56,14 @@ public class ConfigReadController {
 	public Map<String, String> ReadConfigFile() {
 		
 		
-		 DriverManagerDataSource dataSource = new DriverManagerDataSource();
-	        dataSource.setDriverClassName("org.h2.Driver");
-	        dataSource.setUrl("jdbc:h2:file:~/data/config");
-	        dataSource.setUsername("sa");
-	        dataSource.setPassword("");
-		  
+//		 DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//	        dataSource.setDriverClassName("org.h2.Driver");
+//	        dataSource.setUrl("jdbc:h2:file:~/data/config");
+//	        dataSource.setUsername("sa");
+//	        dataSource.setPassword("");
+//		  
 			
-		JDBCConfigController config = new JDBCConfigController(dataSource,"select distinct property_key, property_value from MySiteProperties",
+		JDBCConfigController config = new JDBCConfigController(this.dataSource,"select distinct property_key, property_value from MySiteProperties",
                 "property_key", "property_value");
 			System.out.print("value is == "+ config.readJDBCPropertyByKey("app.message"));
 			return config.readJDBCPropertyByKey("app.message");
